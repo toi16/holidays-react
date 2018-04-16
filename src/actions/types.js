@@ -8,3 +8,4 @@ export const HOLIDAY_UPDATE = 'holiday_update';
 export const HOLIDAY_CREATE = 'holiday_create';
 export const HOLIDAYS_FETCH_SUCCESS = 'holidays_fetch_success';
 export const HOLIDAY_SAVE_SUCCESS = 'holiday_save_sucess';
+export const WELCOME_FINISHED = 'welcome_finished';

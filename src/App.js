@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 import { TabNavigator } from 'react-navigation';
-import { createStore, applyMiddleware } from 'redux';
 import firebase from 'firebase';
-import ReduxThunk from 'redux-thunk';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import reducers from './reducers';
+import { ActivityIndicator } from 'react-native';
+import { persistor, store } from './store';
 
 import WelcomeScreen from './screens/WelcomeScreen';
 import AuthScreen from './screens/AuthScreen';
@@ -30,7 +30,6 @@ class App extends Component {
     }
 
     render() {
-        const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
         const MainNavigator = TabNavigator({
             welcome: { screen: WelcomeScreen },
             auth: { screen: AuthScreen },
@@ -40,7 +39,11 @@ class App extends Component {
                         screen: HolidayScreen,
                         navigationOptions: {
                             tabBarLabel: 'HOLIDAY',
-                            tabBarIcon: () => <Icon name='user-o' size={35} style={{ color: 'gray' }} />
+                            tabBarIcon: () => <Icon
+                                name='user-o'
+                                size={35}
+                                style={{ color: 'gray' }}
+                            />
                         }
                     },
                     add: { screen: AddScreen },
@@ -66,7 +69,9 @@ class App extends Component {
 
         return (
             <Provider store={store}>
-                <MainNavigator />
+                <PersistGate loading={<ActivityIndicator size="large" color="#0000ff" />} persistor={persistor}>
+                    <MainNavigator />
+                </PersistGate>
             </Provider>
         );
     }
