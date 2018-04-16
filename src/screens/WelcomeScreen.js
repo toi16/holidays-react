@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Slides from '../components/Slides';
-import welcomeFinished from '../actions';
+import { welcomeFinished } from '../actions';
 
 const SLIDE_DATA = [
     { text: 'Welcome to the Holidays App !!' },
@@ -9,8 +9,14 @@ const SLIDE_DATA = [
 ];
 
 class WelcomeScreen extends Component {
+    componentWillMount() {
+        if (welcomeFinished) {
+            this.props.navigation.navigate('auth');
+        }
+    }
+
     onSlidesComplete = () => {
-        this.props.welcomeFinished = true;
+        welcomeFinished(true);
         this.props.navigation.navigate('auth');
     }
 
